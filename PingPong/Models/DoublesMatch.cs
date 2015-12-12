@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PingPong.Models
 {
-    public class DoublesMatch
+    public class DoublesMatch : IComparable
     {
         [Key]
         public int MatchId { get; set; }
@@ -33,5 +33,11 @@ namespace PingPong.Models
 
         [Required]
         public int TeamTwoElo { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            DoublesMatch other = obj as DoublesMatch;
+            return -1 * (this.MatchDate.CompareTo(other.MatchDate));
+        }
     }
 }

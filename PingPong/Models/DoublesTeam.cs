@@ -10,12 +10,9 @@ namespace PingPong.Models
     {
         [Key]
         public int TeamId { get; set; }
-
+        
         [Required]
-        public Player PlayerOne { get; set; }
-
-        [Required]
-        public Player PlayerTwo { get; set; }
+        public Player[] TeamMembers { get; set; }
 
         [Required]
         [MaxLength(30)]

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PingPong.Models
 {
-    public class SinglesMatch
+    public class SinglesMatch : IComparable
     {
         [Key]
         public int MatchId { get; set; }
@@ -34,5 +34,11 @@ namespace PingPong.Models
 
         [Required]
         public int PlayerTwoElo { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            SinglesMatch other = obj as SinglesMatch;
+            return -1 * (this.MatchDate.CompareTo(other.MatchDate));
+        }
     }
 }

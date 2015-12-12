@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PingPong.Models
 {
-    public class Player
+    public class Player :IComparable
     {
         [Key]
         public int PlayerId { get; set; }
@@ -29,5 +29,17 @@ namespace PingPong.Models
         public List<SinglesMatch> DoublesMatches { get; set; }
 
         public List<DoublesTeam> Teams { get; set; }
+
+        public int CompareTo(object obj)
+        {
+            Player other = obj as Player;
+            if(other != null)
+            {
+                return this.Handle.CompareTo(other.Handle);
+            } else
+            {
+                throw new ArgumentException("Object is not a Player");
+            }
+        }
     }
 }

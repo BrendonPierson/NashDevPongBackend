@@ -155,14 +155,15 @@ namespace Pong.Tests.Models
         [TestMethod]
         public void PingPongRepoEnsureICanGetAllSinglesMatches()
         {
+            DateTime now = DateTime.Now;
             var expected = new List<SinglesMatch>
             {
-                new SinglesMatch { MatchId = 1 },
-                new SinglesMatch { MatchId = 2 },
+                new SinglesMatch { MatchId = 2, MatchDate = now },
+                new SinglesMatch { MatchId = 1, MatchDate = now.AddSeconds(33) }
             };
             mock_sMatch_set.Object.AddRange(expected);
             ConnectMocksToDataStore(expected);
-
+            expected.Sort();
             List<SinglesMatch> actual = repository.GetAllSinglesMatches();
 
             Assert.AreEqual(1, actual.First().MatchId);
@@ -172,13 +173,15 @@ namespace Pong.Tests.Models
         [TestMethod]
         public void PingPongRepoEnsureICanGetAllDoublesMatches()
         {
+            DateTime now = DateTime.Now;
             var expected = new List<DoublesMatch>
             {
-                new DoublesMatch { MatchId = 1 },
-                new DoublesMatch { MatchId = 2 },
+                new DoublesMatch { MatchId = 2, MatchDate = now.AddHours(-1) },
+                new DoublesMatch { MatchId = 1, MatchDate = now }
             };
             mock_dMatch_set.Object.AddRange(expected);
             ConnectMocksToDataStore(expected);
+            expected.Sort();
 
             List<DoublesMatch> actual = repository.GetAllDoublesMatches();
 
@@ -221,7 +224,7 @@ namespace Pong.Tests.Models
         }
 
         [TestMethod]
-        public void PingPongRepoEnsureICanGetUserByName()
+        public void PingPongRepoEnsureICanGetUserByHandle()
         {
             var expected = new List<Player>
             {
@@ -234,6 +237,72 @@ namespace Pong.Tests.Models
             string handle = "pongmaster89";
             Player actual_user = repository.GetPlayerByHandle(handle);
             Assert.AreEqual("Joe", actual_user.FirstName);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureHandleIsAvailable()
+        {
+            var expected = new List<Player>
+            {
+                new Player {Handle = "adam1" },
+                new Player { Handle = "rumbadancer2"}
+            };
+            mock_player_set.Object.AddRange(expected);
+
+            ConnectMocksToDataStore(expected);
+            string handle = "bogus";
+            bool is_available = repository.IsHandleAvailable(handle);
+            Assert.IsTrue(is_available);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanSearchByHandle()
+        {
+            // Arrange
+            var expected = new List<Player>
+            {
+                new Player { Handle = "adam1" },
+                new Player { Handle = "rumbadancer2"},
+                new Player { Handle = "treehugger" },
+                new Player { Handle = "treedancer"}
+
+            };
+            mock_player_set.Object.AddRange(expected);
+
+            ConnectMocksToDataStore(expected);
+            // Act
+            string handle = "tree";
+            List<Player> expected_users = new List<Player>
+            {
+                new Player { Handle = "treedancer" },
+                new Player { Handle = "treehugger" }
+            };
+            List<Player> actual_users = repository.SearchByHandle(handle);
+
+            Assert.AreEqual(expected_users[0].Handle, actual_users[0].Handle);
+            Assert.AreEqual(expected_users[1].Handle, actual_users[1].Handle);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanGetUsersInRatingOrder()
+        {
+            // Arrange
+            var expected = new List<Player>
+            {
+                new Player { Handle = "third", EloRating = 1300 },
+                new Player { Handle = "fourth", EloRating = 1100 },
+                new Player { Handle = "second" , EloRating = 1400 },
+                new Player { Handle = "first", EloRating = 1500 }
+
+            };
+            mock_player_set.Object.AddRange(expected);
+
+            ConnectMocksToDataStore(expected);
+           
+            List<Player> actual_users = repository.GetAllPlayersRanked();
+
+            Assert.AreEqual(expected[0].Handle, actual_users[2].Handle);
+            Assert.AreEqual(expected[1].Handle, actual_users[3].Handle);
         }
     }
 }

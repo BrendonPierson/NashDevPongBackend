@@ -26,6 +26,13 @@ namespace PingPong.Models
             return query.ToList();
         }
 
+        public List<Player> GetAllPlayersRanked()
+        {
+            var query = from users in _context.Players select users;
+            return query.OrderBy(u => -1 * (u.EloRating)).ToList();
+        }
+
+
         public List<DoublesTeam> GetAllDoublesTeams()
         {
             var query = from team in _context.DoublesTeams select team;
@@ -35,13 +42,17 @@ namespace PingPong.Models
         public List<SinglesMatch> GetAllSinglesMatches()
         {
             var query = from match in _context.SinglesMatches select match;
-            return query.ToList();
+            List<SinglesMatch> sMatches = query.ToList();
+            sMatches.Sort();
+            return sMatches;
         }
 
         public List<DoublesMatch> GetAllDoublesMatches()
         {
             var query = from match in _context.DoublesMatches select match;
-            return query.ToList();
+            List<DoublesMatch> dMatch = query.ToList();
+            dMatch.Sort();
+            return dMatch;
         }
 
         public List<SinglesTournament> GetAllSinglesTournaments()
@@ -62,6 +73,28 @@ namespace PingPong.Models
             return query.SingleOrDefault();
         }
 
+        public bool IsHandleAvailable(string handle)
+        {
+            bool available = false;
+            try
+            {
+                Player some_user = GetPlayerByHandle(handle);
+                if (some_user == null)
+                {
+                    available = true;
+                }
+            }
+            catch (InvalidOperationException) { }
 
+            return available;
+        }
+
+        public List<Player> SearchByHandle(string handle)
+        {
+            var query = from user in _context.Players select user;
+            List<Player> found_users = query.Where(user => user.Handle.Contains(handle)).ToList();
+            found_users.Sort();
+            return found_users;
+        }
     }
 }
