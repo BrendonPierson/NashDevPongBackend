@@ -6,10 +6,10 @@ using System.Web;
 
 namespace PingPong.Models
 {
-    public class User
+    public class Player
     {
         [Key]
-        public int UserId { get; set; }
+        public int PlayerId { get; set; }
 
         [MaxLength(64)]
         public string FirstName { get; set; }
@@ -25,7 +25,8 @@ namespace PingPong.Models
         [Required]
         public int EloRating { get; set; }
 
-        public List<Match> Matches { get; set; }
+        public List<SinglesMatch> SingesMatches { get; set; }
+        public List<SinglesMatch> DoublesMatches { get; set; }
 
         public List<DoublesTeam> Teams { get; set; }
     }

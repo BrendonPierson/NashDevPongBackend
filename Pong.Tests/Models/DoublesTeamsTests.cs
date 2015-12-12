@@ -20,14 +20,14 @@ namespace Pong.Tests.Models
             DoublesTeam team = new DoublesTeam
             {
                 TeamId = 1,
-                PlayerTwoId = 2,
-                PlayerOneId = 3,
+                PlayerTwo = new Player { PlayerId = 2 },
+                PlayerOne = new Player { PlayerId = 3 },
                 TeamName = "Blue Baracudas",
                 EloRating = 1300
             };
             Assert.AreEqual(1, team.TeamId);
-            Assert.AreEqual(2, team.PlayerTwoId);
-            Assert.AreEqual(3, team.PlayerOneId);
+            Assert.AreEqual(2, team.PlayerTwo.PlayerId);
+            Assert.AreEqual(3, team.PlayerOne.PlayerId);
             Assert.AreEqual("Blue Baracudas", team.TeamName);
             Assert.AreEqual(1300, team.EloRating);
         }

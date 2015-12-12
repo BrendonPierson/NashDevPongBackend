@@ -174,11 +174,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DoublesMatch.cs" />
     <Compile Include="Models\DoublesTeam.cs" />
+    <Compile Include="Models\DoublesTournament.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Match.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\SinglesMatch.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\SinglesTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

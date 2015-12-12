@@ -12,13 +12,13 @@ namespace PingPong.Models
         public int TeamId { get; set; }
 
         [Required]
-        public int PlayerOneId { get; set; }
+        public Player PlayerOne { get; set; }
 
         [Required]
-        public int PlayerTwoId { get; set; }
+        public Player PlayerTwo { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(30)]
         [MinLength(3)]
         [RegularExpression(@"^[a-zA-Z\d]+[-_a-zA-Z\d]{0,2}[a-zA-Z\d]+")]
         public string TeamName { get; set; }
@@ -26,7 +26,7 @@ namespace PingPong.Models
         [Required]
         public int EloRating { get; set; }
 
-        public List<Match> Matches { get; set; }
+        public List<SinglesMatch> Matches { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PingPong.Models
 {
-    public class Match
+    public class SinglesMatch
     {
         [Key]
         public int MatchId { get; set; }
@@ -16,10 +16,10 @@ namespace PingPong.Models
         public DateTime MatchDate { get; set; }
 
         [Required]
-        public int PlayerOneId { get; set; }
+        public Player PlayerOne { get; set; }
 
         [Required]
-        public int PlayerTwoId { get; set; }
+        public Player PlayerTwo { get; set; }
 
         [Required]
         [Range(0,100)]
