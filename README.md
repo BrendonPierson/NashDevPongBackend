@@ -32,7 +32,7 @@ A pingpong rating app built on c# and AngularJs.
 	In order to visualize stats
 	I want to look at graphs and charts
 ### Wireframes
-[Original Layout](https://nashdev-pong.firebaseapp.com)
-[Stats Page](https://wireframe.cc/43lORd)
-[Tournament page](https://wireframe.cc/Jg1pFu)
+	- [Original Layout](https://nashdev-pong.firebaseapp.com)
+	- [Stats Page](https://wireframe.cc/43lORd)
+	- [Tournament page](https://wireframe.cc/Jg1pFu)
 
