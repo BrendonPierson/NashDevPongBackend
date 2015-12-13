@@ -137,10 +137,72 @@ namespace PingPong.Models
                 _context.SaveChanges();
             }
             catch (Exception)
+
             {
                 isAdded = false;
             }
             return isAdded;
         }
+
+        public bool AddSinglesTournament(string tourneyName)
+        {
+            SinglesTournament tourney = new SinglesTournament();
+            tourney.TournamentName = tourneyName;
+            tourney.StartDate = DateTime.Now;
+            tourney.IsActive = true;
+            tourney.TournamentId = _context.SinglesTournaments.Count();
+            bool isAdded = true;
+            try
+            {
+                _context.SinglesTournaments.Add(tourney);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+
+        }
+
+        public SinglesTournament GetSinglesTournamentById(int tourneyId)
+        {
+            var query = from t in _context.SinglesTournaments where t.TournamentId == tourneyId select t;
+            return query.SingleOrDefault();
+        }
+
+        public bool AddSinglesMatchToTourney(int tourneyId, SinglesMatch match)
+        {
+            bool isAdded = true;
+            try
+            {
+                SinglesTournament tourney = _context.SinglesTournaments
+                    .Where(t => t.TournamentId == tourneyId).FirstOrDefault();
+
+                tourney.SinglesMatches.Add(match);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
+
+        public bool ArchiveSinglesTournament(int tourneyId)
+        {
+            bool isUpdated = true;
+            try
+            {
+                _context.SinglesTournaments.Find(tourneyId).IsActive = false;
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isUpdated = false;
+            }
+            return isUpdated;
+        }
+
     }
 }

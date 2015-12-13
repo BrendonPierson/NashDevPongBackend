@@ -348,5 +348,85 @@ namespace Pong.Tests.Models
             Assert.AreEqual(1, repository.GetAllDoublesMatches().Count);
             Assert.IsTrue(successful);
         }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddSinglesTourney()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+
+            string tourneyName = "cohort ten xmas tourney";
+            bool success = repository.AddSinglesTournament(tourneyName);
+            Assert.AreEqual(tourneyName, repository.GetAllSinglesTournaments()[0].TournamentName);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanGetTourneyId()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+
+            string tourneyName = "cohort ten xmas tourney";
+            bool success = repository.AddSinglesTournament(tourneyName);
+            repository.AddSinglesTournament("Second Tourney");
+            Assert.AreEqual(1, repository.GetAllSinglesTournaments()[1].TournamentId);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanGetTournamentById()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+
+            string tourneyName = "cohort ten xmas tourney";
+            int tourneyId = 0;
+            bool success = repository.AddSinglesTournament(tourneyName);
+            SinglesTournament tourney = new SinglesTournament { TournamentName = "cohort ten xmas tourney" };
+            Assert.AreEqual(tourneyName, repository.GetSinglesTournamentById(tourneyId).TournamentName);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddMatchToSinglesTourney()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+            SinglesMatch match = new SinglesMatch
+            {
+                PlayerOne = new Player { Handle = "pongAholic", EloRating = 1300 },
+                PlayerTwo = new Player { Handle = "PongBaller", EloRating = 1300 },
+                PlayerOneScore = 21,
+                PlayerTwoScore = 18
+            };
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddSinglesTournament(tourneyName);
+            int tourneyId = 0;
+            bool success = repository.AddSinglesMatchToTourney(tourneyId, match);
+            //Assert.IsTrue(success);
+            Assert.AreEqual(tourneyName, repository.GetSinglesTournamentById(0).TournamentName);
+            Assert.IsNotNull(repository.GetSinglesTournamentById(0).SinglesMatches);
+        }
+
+
+        [TestMethod]
+        public void PingPongRepoEnsurePlayerCanArchiveSinglesTourney()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+            int tourneyId = 0;
+
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddSinglesTournament(tourneyName);
+            bool success = repository.ArchiveSinglesTournament(tourneyId);
+
+            Assert.IsFalse(repository.GetAllSinglesTournaments()[0].IsActive);
+        }
     }
 }
