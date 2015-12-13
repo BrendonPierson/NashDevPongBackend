@@ -306,6 +306,12 @@ namespace Pong.Tests.Models
         }
 
         [TestMethod]
+        public void PingPongRepoEnsureICanCreateUser()
+        {
+
+        }
+
+        [TestMethod]
         public void PingPongRepoEnsureICanCreateASinglesMatch()
         {
             // Arrange
@@ -314,19 +320,32 @@ namespace Pong.Tests.Models
             ConnectMocksToDataStore(expectedMatches);
             Player user1 = new Player { Handle = "popeye1", EloRating = 1250 };
             Player user2 = new Player { Handle = "brutus", EloRating = 1350 };
-            SinglesMatch match = new SinglesMatch
-            {
-                PlayerOne = user1,
-                PlayerTwo = user2,
-                PlayerOneScore = 21,
-                PlayerTwoScore = 13
-            };
+            
             mock_sMatch_set.Setup(j => j.Add(It.IsAny<SinglesMatch>())).Callback((SinglesMatch s) => expectedMatches.Add(s));
             // Act
-            bool successful = repository.AddSinglesMatch(match);
+            bool successful = repository.AddSinglesMatch(user1, user2, 21, 13);
 
             // Assert
             Assert.AreEqual(1, repository.GetAllSinglesMatches().Count);
+            Assert.IsTrue(successful);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanCreateADoublesMatch()
+        {
+            // Arrange
+            DateTime base_time = DateTime.Now;
+            List<DoublesMatch> expectedMatches = new List<DoublesMatch>(); // This is our database
+            ConnectMocksToDataStore(expectedMatches);
+            DoublesTeam team1 = new DoublesTeam { TeamName = "popeye1", EloRating = 1250 };
+            DoublesTeam team2 = new DoublesTeam { TeamName = "brutus", EloRating = 1350 };
+            
+            mock_dMatch_set.Setup(j => j.Add(It.IsAny<DoublesMatch>())).Callback((DoublesMatch s) => expectedMatches.Add(s));
+            // Act
+            bool successful = repository.AddDoublesMatch(team1, team2, 21, 13);
+
+            // Assert
+            Assert.AreEqual(1, repository.GetAllDoublesMatches().Count);
             Assert.IsTrue(successful);
         }
     }
