@@ -304,5 +304,30 @@ namespace Pong.Tests.Models
             Assert.AreEqual(expected[0].Handle, actual_users[2].Handle);
             Assert.AreEqual(expected[1].Handle, actual_users[3].Handle);
         }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanCreateASinglesMatch()
+        {
+            // Arrange
+            DateTime base_time = DateTime.Now;
+            List<SinglesMatch> expectedMatches = new List<SinglesMatch>(); // This is our database
+            ConnectMocksToDataStore(expectedMatches);
+            Player user1 = new Player { Handle = "popeye1", EloRating = 1250 };
+            Player user2 = new Player { Handle = "brutus", EloRating = 1350 };
+            SinglesMatch match = new SinglesMatch
+            {
+                PlayerOne = user1,
+                PlayerTwo = user2,
+                PlayerOneScore = 21,
+                PlayerTwoScore = 13
+            };
+            mock_sMatch_set.Setup(j => j.Add(It.IsAny<SinglesMatch>())).Callback((SinglesMatch s) => expectedMatches.Add(s));
+            // Act
+            bool successful = repository.AddSinglesMatch(match);
+
+            // Assert
+            Assert.AreEqual(1, repository.GetAllSinglesMatches().Count);
+            Assert.IsTrue(successful);
+        }
     }
 }

@@ -96,5 +96,25 @@ namespace PingPong.Models
             found_users.Sort();
             return found_users;
         }
+
+        public bool AddSinglesMatch(SinglesMatch match)
+        {
+            match.MatchDate = DateTime.Now;
+            match.PlayerOneElo = match.PlayerOne.EloRating;
+            match.PlayerTwoElo = match.PlayerTwo.EloRating;
+            // It would be unnecessary to save the elo ratings separate from the players if the current state of the player
+            // was permanently stored.  I don't think this is the case, only a reference to that player is stored
+            bool isAdded = true;
+            try
+            {
+                _context.SinglesMatches.Add(match);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
     }
 }
