@@ -151,6 +151,7 @@ namespace PingPong.Models
             tourney.StartDate = DateTime.Now;
             tourney.IsActive = true;
             tourney.TournamentId = _context.SinglesTournaments.Count();
+            tourney.SinglesMatches = new List<SinglesMatch>();
             bool isAdded = true;
             try
             {
@@ -162,7 +163,6 @@ namespace PingPong.Models
                 isAdded = false;
             }
             return isAdded;
-
         }
 
         public SinglesTournament GetSinglesTournamentById(int tourneyId)
@@ -176,10 +176,14 @@ namespace PingPong.Models
             bool isAdded = true;
             try
             {
-                SinglesTournament tourney = _context.SinglesTournaments
-                    .Where(t => t.TournamentId == tourneyId).FirstOrDefault();
+                SinglesTournament tourney = GetSinglesTournamentById(tourneyId);
 
-                tourney.SinglesMatches.Add(match);
+                //var query = from t in _context.SinglesTournaments where t.TournamentId == tourneyId select t;
+                
+                tourney.SinglesMatches.Add(match); 
+                
+
+                //_context.SinglesTournaments.Find(tourneyId).SinglesMatches.Add(match);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -194,7 +198,8 @@ namespace PingPong.Models
             bool isUpdated = true;
             try
             {
-                _context.SinglesTournaments.Find(tourneyId).IsActive = false;
+                SinglesTournament tourney = GetSinglesTournamentById(tourneyId);
+                tourney.IsActive = false;
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -204,5 +209,64 @@ namespace PingPong.Models
             return isUpdated;
         }
 
+        public DoublesTournament GetDoublesTournamentById(int tourneyId)
+        {
+            var query = from t in _context.DoublesTournaments where t.TournamentId == tourneyId select t;
+            return query.SingleOrDefault();
+        }
+
+        public bool ArchiveDoublesTournament(int tourneyId)
+        {
+            bool isUpdated = true;
+            try
+            {
+                DoublesTournament tourney = GetDoublesTournamentById(tourneyId);
+                tourney.IsActive = false;
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isUpdated = false;
+            }
+            return isUpdated;
+        }
+
+        public bool AddDoublesTournament(string tourneyName)
+        {
+            DoublesTournament tourney = new DoublesTournament();
+            tourney.TournamentName = tourneyName;
+            tourney.StartDate = DateTime.Now;
+            tourney.IsActive = true;
+            tourney.TournamentId = _context.DoublesTournaments.Count();
+            tourney.DoublesMatches = new List<DoublesMatch>();
+            bool isAdded = true;
+            try
+            {
+                _context.DoublesTournaments.Add(tourney);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
+
+        public bool AddDoublesMatchToTourney(int tourneyId, DoublesMatch match)
+        {
+            bool isAdded = true;
+            try
+            {
+                DoublesTournament tourney = GetDoublesTournamentById(tourneyId);
+
+                tourney.DoublesMatches.Add(match);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
     }
 }

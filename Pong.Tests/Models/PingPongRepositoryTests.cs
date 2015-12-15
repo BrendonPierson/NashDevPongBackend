@@ -410,7 +410,7 @@ namespace Pong.Tests.Models
             bool success = repository.AddSinglesMatchToTourney(tourneyId, match);
             //Assert.IsTrue(success);
             Assert.AreEqual(tourneyName, repository.GetSinglesTournamentById(0).TournamentName);
-            Assert.IsNotNull(repository.GetSinglesTournamentById(0).SinglesMatches);
+            Assert.AreEqual(21, repository.GetSinglesTournamentById(0).SinglesMatches[0].PlayerOneScore);
         }
 
 
@@ -427,6 +427,43 @@ namespace Pong.Tests.Models
             bool success = repository.ArchiveSinglesTournament(tourneyId);
 
             Assert.IsFalse(repository.GetAllSinglesTournaments()[0].IsActive);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddMatchToDoublesTourney()
+        {
+            List<DoublesTournament> expectedTourney = new List<DoublesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_dTourney_set.Setup(j => j.Add(It.IsAny<DoublesTournament>())).Callback((DoublesTournament s) => expectedTourney.Add(s));
+            DoublesMatch match = new DoublesMatch
+            {
+                TeamOne = new DoublesTeam { TeamName = "pongAholic", EloRating = 1300 },
+                TeamTwo = new DoublesTeam { TeamName = "PongBaller", EloRating = 1300 },
+                TeamOneScore = 21,
+                TeamTwoScore = 18
+            };
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddDoublesTournament(tourneyName);
+            int tourneyId = 0;
+            bool success = repository.AddDoublesMatchToTourney(tourneyId, match);
+            Assert.IsTrue(success);
+            Assert.AreEqual(tourneyName, repository.GetDoublesTournamentById(0).TournamentName);
+        }
+
+
+        [TestMethod]
+        public void PingPongRepoEnsurePlayerCanArchiveDoublesTourney()
+        {
+            List<DoublesTournament> expectedTourney = new List<DoublesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_dTourney_set.Setup(j => j.Add(It.IsAny<DoublesTournament>())).Callback((DoublesTournament s) => expectedTourney.Add(s));
+            int tourneyId = 0;
+
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddDoublesTournament(tourneyName);
+            bool success = repository.ArchiveDoublesTournament(tourneyId);
+
+            Assert.IsFalse(repository.GetAllDoublesTournaments()[0].IsActive);
         }
     }
 }
