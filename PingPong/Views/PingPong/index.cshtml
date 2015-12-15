@@ -1,0 +1,20 @@
+﻿@model IEnumerable<PingPong.Models.SinglesMatch>
+@{
+    Layout = "~/Views/Shared/_PingPongLayout.cshtml";
+}
+
+@*<div ng-controller="Controller">
+    <p>{{test}}</p>
+    <button ng-click="hello()">Click me!</button>
+</div>*@
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jot">
+                @item.PlayerOne.Handle
+            </div>
+        </div>
+    </div>
+}
