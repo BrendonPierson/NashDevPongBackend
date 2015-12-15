@@ -152,6 +152,7 @@ namespace PingPong.Models
             tourney.IsActive = true;
             tourney.TournamentId = _context.SinglesTournaments.Count();
             tourney.SinglesMatches = new List<SinglesMatch>();
+            tourney.Players = new List<Player>();
             bool isAdded = true;
             try
             {
@@ -177,13 +178,7 @@ namespace PingPong.Models
             try
             {
                 SinglesTournament tourney = GetSinglesTournamentById(tourneyId);
-
-                //var query = from t in _context.SinglesTournaments where t.TournamentId == tourneyId select t;
-                
                 tourney.SinglesMatches.Add(match); 
-                
-
-                //_context.SinglesTournaments.Find(tourneyId).SinglesMatches.Add(match);
                 _context.SaveChanges();
             }
             catch (Exception)
@@ -239,6 +234,7 @@ namespace PingPong.Models
             tourney.IsActive = true;
             tourney.TournamentId = _context.DoublesTournaments.Count();
             tourney.DoublesMatches = new List<DoublesMatch>();
+            tourney.Teams = new List<DoublesTeam>();
             bool isAdded = true;
             try
             {
@@ -260,6 +256,40 @@ namespace PingPong.Models
                 DoublesTournament tourney = GetDoublesTournamentById(tourneyId);
 
                 tourney.DoublesMatches.Add(match);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
+
+        public bool AddPlayerToTournament(int tourneyId, Player player)
+        {
+            bool isAdded = true;
+            try
+            {
+                SinglesTournament tourney = GetSinglesTournamentById(tourneyId);
+
+                tourney.Players.Add(player);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
+
+        public bool AddTeamToTournament(int tourneyId, DoublesTeam team)
+        {
+            bool isAdded = true;
+            try
+            {
+                DoublesTournament tourney = GetDoublesTournamentById(tourneyId);
+
+                tourney.Teams.Add(team);
                 _context.SaveChanges();
             }
             catch (Exception)

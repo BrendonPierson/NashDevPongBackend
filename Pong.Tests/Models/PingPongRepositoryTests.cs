@@ -465,5 +465,37 @@ namespace Pong.Tests.Models
 
             Assert.IsFalse(repository.GetAllDoublesTournaments()[0].IsActive);
         }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddPlayerToTournament()
+        {
+            List<SinglesTournament> expectedTourney = new List<SinglesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_sTourney_set.Setup(j => j.Add(It.IsAny<SinglesTournament>())).Callback((SinglesTournament s) => expectedTourney.Add(s));
+
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddSinglesTournament(tourneyName);
+            Player player = new Player { Handle = "#1baller", EloRating = 1300 };
+            int tourneyId = 0;
+            bool success = repository.AddPlayerToTournament(tourneyId, player);
+            Assert.AreEqual(1, repository.GetSinglesTournamentById(0).Players.Count);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddTeamToTournament()
+        {
+            List<DoublesTournament> expectedTourney = new List<DoublesTournament>();
+            ConnectMocksToDataStore(expectedTourney);
+            mock_dTourney_set.Setup(j => j.Add(It.IsAny<DoublesTournament>())).Callback((DoublesTournament s) => expectedTourney.Add(s));
+
+            string tourneyName = "cohort ten xmas tourney";
+            repository.AddDoublesTournament(tourneyName);
+            DoublesTeam team = new DoublesTeam { TeamName = "pongAholic", EloRating = 1300 };
+            int tourneyId = 0;
+            bool success = repository.AddTeamToTournament(tourneyId, team);
+            Assert.AreEqual(1, repository.GetDoublesTournamentById(0).Teams.Count);
+            Assert.IsTrue(success);
+        }
     }
 }
