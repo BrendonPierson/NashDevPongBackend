@@ -3,10 +3,9 @@
     Layout = "~/Views/Shared/_PingPongLayout.cshtml";
 }
 
-@*<div ng-controller="Controller">
-    <p>{{test}}</p>
-    <button ng-click="hello()">Click me!</button>
-</div>*@
+<div ng-controller="SinglesMatches as vm">
+    <p>{{vm.title}}</p>
+</div>
 
 @foreach (var item in Model)
 {

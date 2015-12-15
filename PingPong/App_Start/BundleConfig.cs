@@ -26,6 +26,17 @@ namespace PingPong
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                        "~/Scripts/angular.js",
+                        "~/Scripts/angular-ui-router.js",
+                        "~/Scripts/app.module.js",
+                        "~/Scripts/core/core.module.js",
+                        "~/Scripts/singlesMatches/singlesMatches.module.js",
+                        "~/Scripts/singlesMatches/singlesMatches.controller.js",
+                        "~/Scripts/core/core.route.js",
+                        "~/Scripts/singleMatches/singleMatches.route.js"
+                        ));
         }
     }
 }
