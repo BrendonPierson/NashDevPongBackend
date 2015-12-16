@@ -15,10 +15,10 @@ namespace PingPong.Models
         public DateTime MatchDate { get; set; }
 
         [Required]
-        public DoublesTeam TeamOne { get; set; }
+        public virtual DoublesTeam TeamOne { get; set; }
 
         [Required]
-        public DoublesTeam TeamTwo { get; set; }
+        public virtual DoublesTeam TeamTwo { get; set; }
 
         [Required]
         [Range(0, 100)]

@@ -298,5 +298,54 @@ namespace PingPong.Models
             }
             return isAdded;
         }
+
+        public bool AddNewPlayer(string handle, string firstName, string lastName)
+        {
+            bool isAdded = true;
+
+            Player player = new Player();
+            player.Handle = handle;
+            player.FirstName = firstName;
+            player.LastName = lastName;
+            player.SingesMatches = new List<SinglesMatch>();
+            player.DoublesMatches = new List<DoublesMatch>();
+            player.Teams = new List<DoublesTeam>();
+            player.EloRating = 1300;
+            player.Tournaments = new List<SinglesTournament>();
+
+            try
+            {
+                _context.Players.Add(player);
+                _context.SaveChanges();
+            }
+            catch(Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
+
+        public bool AddNewTeam(Player playerOne, Player playerTwo, string teamName)
+        {
+            bool isAdded = true;
+
+            DoublesTeam t = new DoublesTeam();
+            t.EloRating = 1300;
+            t.Matches = new List<DoublesMatch>();
+            t.TeamMembers = new Player[] { playerOne, playerTwo };
+            t.TeamName = teamName;
+            t.Tournaments = new List<DoublesTournament>();
+
+            try
+            {
+                _context.DoublesTeams.Add(t);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                isAdded = false;
+            }
+            return isAdded;
+        }
     }
 }

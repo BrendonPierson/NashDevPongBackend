@@ -11,7 +11,7 @@
              url: "/PingPong#/singlesMatches",
              controller: 'SinglesMatches',
              controllerAs: 'vm',
-             templateUrl: "singlesMatches.html"
+             templateUrl: "~/Scripts/singlesMatches/singlesMatches.html"
          });
     }
 })();

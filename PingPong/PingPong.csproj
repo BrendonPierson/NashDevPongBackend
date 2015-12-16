@@ -187,11 +187,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PingPongApiController.cs" />
+    <Compile Include="Controllers\SinglesMatchesController.cs" />
     <Compile Include="Controllers\PingPongController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512161632110_InitialCreate.cs" />
+    <Compile Include="Migrations\201512161632110_InitialCreate.Designer.cs">
+      <DependentUpon>201512161632110_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DoublesMatch.cs" />
     <Compile Include="Models\DoublesTeam.cs" />
@@ -235,7 +240,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\singlesMatches\singleMatches.route.js" />
+    <Content Include="Scripts\singlesMatches\singlesMatches.route.js" />
     <Content Include="Scripts\singlesMatches\singlesMatches.module.js" />
     <Content Include="Scripts\singlesMatches\singlesMatches.controller.js" />
     <Content Include="Scripts\_references.js" />
@@ -288,6 +293,11 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512161632110_InitialCreate.resx">
+      <DependentUpon>201512161632110_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

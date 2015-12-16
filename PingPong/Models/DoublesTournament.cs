@@ -19,10 +19,10 @@ namespace PingPong.Models
         public DateTime EndDate { get; set; }
 
         [Required]
-        public List<DoublesTeam> Teams { get; set; }
+        public virtual List<DoublesTeam> Teams { get; set; }
 
         [Required]
-        public List<DoublesMatch> DoublesMatches { get; set; }
+        public virtual List<DoublesMatch> DoublesMatches { get; set; }
 
         [Required]
         public bool IsActive { get; set; }

@@ -35,7 +35,7 @@ namespace PingPong
                         "~/Scripts/singlesMatches/singlesMatches.module.js",
                         "~/Scripts/singlesMatches/singlesMatches.controller.js",
                         "~/Scripts/core/core.route.js",
-                        "~/Scripts/singleMatches/singleMatches.route.js"
+                        "~/Scripts/singlesMatches/singlesMatches.route.js"
                         ));
         }
     }

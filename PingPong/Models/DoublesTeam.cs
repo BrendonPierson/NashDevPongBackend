@@ -23,7 +23,8 @@ namespace PingPong.Models
         [Required]
         public int EloRating { get; set; }
 
-        public List<SinglesMatch> Matches { get; set; }
+        public virtual List<DoublesMatch> Matches { get; set; }
+        public virtual List<DoublesTournament> Tournaments { get; set; }
 
     }
 }

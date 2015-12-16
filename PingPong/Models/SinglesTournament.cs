@@ -19,10 +19,10 @@ namespace PingPong.Models
         public DateTime EndDate { get; set; }
 
         [Required]
-        public List<Player> Players { get; set; }
+        public virtual List<Player> Players { get; set; }
 
         [Required]
-        public List<SinglesMatch> SinglesMatches { get; set; }
+        public virtual List<SinglesMatch> SinglesMatches { get; set; }
 
         [Required]
         public bool IsActive { get; set; }

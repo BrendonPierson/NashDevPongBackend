@@ -497,5 +497,39 @@ namespace Pong.Tests.Models
             Assert.AreEqual(1, repository.GetDoublesTournamentById(0).Teams.Count);
             Assert.IsTrue(success);
         }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddNewPlayer()
+        {
+            List<Player> expectedPlayer = new List<Player>();
+            ConnectMocksToDataStore(expectedPlayer);
+            mock_player_set.Setup(j => j.Add(It.IsAny<Player>())).Callback((Player s) => expectedPlayer.Add(s));
+
+            var handle = "Pongballer";
+            var firstName = "Joe";
+            var lastName = "Dirt";
+           
+            var success = repository.AddNewPlayer(handle, firstName, lastName);
+
+            Assert.IsTrue(success);
+            Assert.AreEqual(firstName, repository.GetPlayerByHandle(handle).FirstName);
+        }
+
+        [TestMethod]
+        public void PingPongRepoEnsureICanAddNewTeam()
+        {
+            List<DoublesTeam> expectedPlayer = new List<DoublesTeam>();
+            ConnectMocksToDataStore(expectedPlayer);
+            mock_team_set.Setup(j => j.Add(It.IsAny<DoublesTeam>())).Callback((DoublesTeam s) => expectedPlayer.Add(s));
+
+            string teamName = "Pongballerz";
+            Player playerOne = new Player { Handle = "pongAholic", EloRating = 1300 };
+            Player playerTwo = new Player { Handle = "PongBaller", EloRating = 1300 };
+
+            bool success = repository.AddNewTeam(playerOne, playerTwo, teamName);
+
+            Assert.IsTrue(success);
+            Assert.AreEqual(teamName, repository.GetAllDoublesTeams()[0].TeamName);
+        }
     }
 }

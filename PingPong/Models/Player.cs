@@ -25,10 +25,10 @@ namespace PingPong.Models
         [Required]
         public int EloRating { get; set; }
 
-        public List<SinglesMatch> SingesMatches { get; set; }
-        public List<SinglesMatch> DoublesMatches { get; set; }
-
-        public List<DoublesTeam> Teams { get; set; }
+        public virtual List<SinglesMatch> SingesMatches { get; set; }
+        public virtual List<DoublesMatch> DoublesMatches { get; set; }
+        public virtual List<DoublesTeam> Teams { get; set; }
+        public virtual List<SinglesTournament> Tournaments { get; set; }
 
         public int CompareTo(object obj)
         {

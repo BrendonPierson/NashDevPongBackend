@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace PingPong.Controllers
 {
-    public class PingPongApiController : ApiController
+    public class SinglesMatchesController : ApiController
     {
         // GET: api/PingPongApi
         public string Get()
