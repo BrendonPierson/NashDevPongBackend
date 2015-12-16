@@ -3,9 +3,15 @@
     .module('app.singlesMatches')
     .controller('SinglesMatches', SinglesMatches);
 
-    function SinglesMatches() {
+    SinglesMatches.$inject = ["$http"];
+
+    function SinglesMatches($http) {
         var vm = this;
-        vm.title = "Cooking with Fire";
+        $http.get("api/PingPongApi")
+            .success(function (data) {
+                vm.title = data;
+            })
+            .error(function (error) { alert(error.error) });
     }
 
 })();

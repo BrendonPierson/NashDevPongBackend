@@ -8,10 +8,10 @@
     function config($stateProvider) {
         $stateProvider
          .state('singlesMatches', {
-             url: "/singlesMatches",
+             url: "/PingPong#/singlesMatches",
              controller: 'SinglesMatches',
              controllerAs: 'vm',
-             templateUrl: "~/scripts/singlesMatches/singlesMatches.html"
+             templateUrl: "singlesMatches.html"
          });
     }
 })();
