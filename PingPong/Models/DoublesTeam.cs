@@ -11,8 +11,8 @@ namespace PingPong.Models
         [Key]
         public int TeamId { get; set; }
         
-        [Required]
-        public Player[] TeamMembers { get; set; }
+        
+        public virtual Player[] TeamMembers { get; set; }
 
         [Required]
         [MaxLength(30)]

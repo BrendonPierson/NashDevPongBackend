@@ -18,10 +18,10 @@ namespace PingPong.Models
 
         public DateTime EndDate { get; set; }
 
-        [Required]
+        
         public virtual List<Player> Players { get; set; }
 
-        [Required]
+        
         public virtual List<SinglesMatch> SinglesMatches { get; set; }
 
         [Required]

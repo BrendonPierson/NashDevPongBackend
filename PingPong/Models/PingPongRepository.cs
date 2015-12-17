@@ -308,10 +308,8 @@ namespace PingPong.Models
             player.FirstName = firstName;
             player.LastName = lastName;
             player.SingesMatches = new List<SinglesMatch>();
-            player.DoublesMatches = new List<DoublesMatch>();
             player.Teams = new List<DoublesTeam>();
             player.EloRating = 1300;
-            player.Tournaments = new List<SinglesTournament>();
 
             try
             {
