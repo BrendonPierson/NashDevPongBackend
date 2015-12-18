@@ -4,7 +4,9 @@
 }
 
 <div ng-controller="SinglesMatches as vm">
-    <p>{{vm.title}}</p>
+    <ul ng-repeat="match in vm.singlesMatches">
+        <li>Player 1 score: {{match.PlayerOneScore}}, Player 2 score: {{match.PlayerTwoScore}}</li>
+    </ul>
 </div>
 
 

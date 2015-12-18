@@ -9,7 +9,8 @@
         var vm = this;
         $http.get("api/SinglesMatches")
             .success(function (data) {
-                vm.title = data;
+                vm.singlesMatches = data;
+                console.log(data);
             })
             .error(function (error) { alert(error.error) });
     }

@@ -4,15 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
+using PingPong.Models;
 
 namespace PingPong.Controllers
 {
     public class SinglesMatchesController : ApiController
     {
-        // GET: api/PingPongApi
-        public string Get()
+        public PingPongRepository Repo { get; set; }
+        SinglesMatchesController()
         {
-            return "this is the title from the api";
+            Repo = new PingPongRepository();
+        }
+
+        // GET: api/PingPongApi
+        public List<SinglesMatch> Get()
+        {
+            List<SinglesMatch> sMatches = Repo.GetAllSinglesMatches();
+            return sMatches;
         }
 
         // GET: api/PingPongApi/5
